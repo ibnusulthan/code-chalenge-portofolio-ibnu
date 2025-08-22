@@ -1,7 +1,6 @@
 "use client";
 
 import { Testimonial } from '@/types/testimonials';
-import Image from "next/image";
 
 const Testimonials = () => {
   const testimonials: Testimonial[] = [
@@ -56,7 +55,7 @@ const Testimonials = () => {
         </h2>
         
         <p className="text-lg text-gray-300 text-center max-w-2xl mx-auto mb-16">
-          Here are testimonials from clients and colleagues I've had the pleasure to work with.
+          Here are testimonials from clients and colleagues I&apos;ve had the pleasure to work with.
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -72,7 +71,7 @@ const Testimonials = () => {
               
               {/* Testimonial Content */}
               <p className="text-gray-300 italic mb-6">
-                "{testimonial.content}"
+                &quot;{testimonial.content}&quot;
               </p>
               
               {/* Testimonial Author */}

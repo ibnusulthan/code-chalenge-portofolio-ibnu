@@ -29,13 +29,13 @@ const About = () => {
 
             <div className="md:w-2/3">
               <p className="text-lg text-gray-300 mb-6">
-                I'm a front-end developer student with a passion for creating
+                I&apos;m a front-end developer student with a passion for creating
                 beautiful, functional, and user-friendly websites. I enjoy
                 turning complex problems into simple, intuitive designs.
               </p>
 
               <p className="text-lg text-gray-300 mb-6">
-                When I'm not coding, you can find me exploring new technologies,
+                When I&apos;m not coding, you can find me exploring new technologies,
                 contributing to open source projects, or sharing my knowledge
                 through blog posts and tutorials.
               </p>

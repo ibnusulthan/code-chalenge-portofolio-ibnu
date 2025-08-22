@@ -56,7 +56,7 @@ const Projects = () => {
         </h2>
 
         <p className="text-lg text-gray-300 text-center max-w-2xl mx-auto mb-16">
-          Here are some of the projects I've worked on. Each project represents
+          Here are some of the projects I&apos;ve worked on. Each project represents
           my skills and passion for web development.
         </p>
 
