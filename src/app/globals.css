@@ -49,3 +49,16 @@ body {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+.line-clamp {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  line-clamp: 4;
+  -webkit-line-clamp: 4;
+}
+
+/* Smooth transitions for carousel */
+.carousel-slide {
+  transition: transform 0.5s ease-in-out;
+}

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from 'react';
 import { Testimonial } from '@/types/testimonials';
 
 const Testimonials = () => {
@@ -30,15 +31,89 @@ const Testimonials = () => {
       content: "Kolaborasi dengan Ibnu sangat smooth. Dia memahami kebutuhan user dan mampu menerjemahkan desain menjadi pengalaman yang exceptional. Communication skills-nya juga excellent!",
       avatar: "/images/ripat.jpg",
       rating: 4
+    },
+    {
+      id: 4,
+      name: "Dhafir Asyraf",
+      role: "Project Manager",
+      company: "TechCorp",
+      content: "Ibnu menyelesaikan proyek tepat waktu dengan kualitas yang sangat bagus. Dia sangat professional dan mudah untuk mengerti apa yang client maksud.",
+      avatar: "/images/dapir.jpg",
+      rating: 4
+    },
+    {
+      id: 5,
+      name: "Arya Hardianto",
+      role: "Project Manager",
+      company: "CreativeLabs",
+      content: "Technical skills Ibnu sangat impressive. Dia cepat belajar teknologi baru dan selalu memberikan solusi yang optimal dan tepat untuk project baru.",
+      avatar: "/images/bewok.jpg",
+      rating: 5
+    },
+    {
+      id: 6,
+      name: "Javier",
+      role: "CEO",
+      company: "InnovateStartup",
+      content: "Dedication dan passion Ibnu terhadap web development sangat terlihat. Dia tidak hanya coding tapi juga memahami apa yang client butuhkan.",
+      avatar: "/images/vier.jpg",
+      rating: 5
     }
   ];
 
-  // Function untuk render bintang rating
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [slidesToShow, setSlidesToShow] = useState(3);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+
+  // Responsive slides to show
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 640) {
+        setSlidesToShow(1);
+      } else if (window.innerWidth < 1024) {
+        setSlidesToShow(2);
+      } else {
+        setSlidesToShow(3);
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Auto play carousel
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [isAutoPlaying, currentSlide]);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => 
+      prev + slidesToShow >= testimonials.length ? 0 : prev + 1
+    );
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => 
+      prev === 0 ? Math.max(0, testimonials.length - slidesToShow) : prev - 1
+    );
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+  };
+
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, index) => (
       <svg
         key={index}
-        className={`w-5 h-5 ${index < rating ? 'text-yellow-400' : 'text-gray-300'}`}
+        className={`w-4 h-4 ${index < rating ? 'text-yellow-400' : 'text-gray-400'}`}
         fill="currentColor"
         viewBox="0 0 20 20"
       >
@@ -46,6 +121,16 @@ const Testimonials = () => {
       </svg>
     ));
   };
+
+  // Get visible testimonials
+  const visibleTestimonials = testimonials.slice(currentSlide, currentSlide + slidesToShow);
+
+  // If we're at the end and don't have enough testimonials to fill the view,
+  // add some from the beginning
+  const displayTestimonials = 
+    visibleTestimonials.length < slidesToShow 
+      ? [...visibleTestimonials, ...testimonials.slice(0, slidesToShow - visibleTestimonials.length)]
+      : visibleTestimonials;
 
   return (
     <section id="testimonials" className="py-20 bg-slate-800/30">
@@ -55,44 +140,94 @@ const Testimonials = () => {
         </h2>
         
         <p className="text-lg text-gray-300 text-center max-w-2xl mx-auto mb-16">
-          Here are testimonials from clients and colleagues I&apos;ve had the pleasure to work with.
+          Berikut adalah testimoni dari klien dan kolega yang pernah bekerja dengan saya.
         </p>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {testimonials.map((testimonial) => (
-            <div
-              key={testimonial.id}
-              className="bg-slate-800/50 rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow"
-            >
-              {/* Rating Stars */}
-              <div className="flex mb-4">
-                {renderStars(testimonial.rating)}
-              </div>
-              
-              {/* Testimonial Content */}
-              <p className="text-gray-300 italic mb-6">
-                &quot;{testimonial.content}&quot;
-              </p>
-              
-              {/* Testimonial Author */}
-              <div className="flex items-center">
-                <div className="w-12 h-12 rounded-full bg-slate-700 mr-4 overflow-hidden">
-                  <img
-                    src={testimonial.avatar}
-                    alt={testimonial.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div>
-                  <h4 className="text-white font-semibold">{testimonial.name}</h4>
-                  <p className="text-purple-400 text-sm">
-                    {testimonial.role}
-                    {testimonial.company && ` • ${testimonial.company}`}
+
+        <div className="relative">
+          {/* Navigation Arrows */}
+          <button
+            onClick={prevSlide}
+            onMouseEnter={() => setIsAutoPlaying(false)}
+            onMouseLeave={() => setIsAutoPlaying(true)}
+            className="absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 z-10 p-3 rounded-full bg-slate-800/80 hover:bg-purple-600 transition-all duration-300 shadow-lg"
+          >
+            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+
+          <button
+            onClick={nextSlide}
+            onMouseEnter={() => setIsAutoPlaying(false)}
+            onMouseLeave={() => setIsAutoPlaying(true)}
+            className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 z-10 p-3 rounded-full bg-slate-800/80 hover:bg-purple-600 transition-all duration-300 shadow-lg"
+          >
+            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+
+          {/* Carousel Container */}
+          <div className="overflow-hidden">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 transition-transform duration-500">
+              {displayTestimonials.map((testimonial, index) => (
+                <div
+                  key={testimonial.id}
+                  className="bg-slate-800/50 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:transform hover:scale-105"
+                >
+                  {/* Rating Stars */}
+                  <div className="flex justify-center mb-4">
+                    {renderStars(testimonial.rating)}
+                  </div>
+                  
+                  {/* Testimonial Content */}
+                  <p className="text-gray-300 italic text-center mb-6 line-clamp-4">
+                    "{testimonial.content}"
                   </p>
+                  
+                  {/* Testimonial Author */}
+                  <div className="flex items-center justify-center">
+                    <div className="w-12 h-12 rounded-full bg-slate-700 mr-4 overflow-hidden flex-shrink-0">
+                      <img
+                        src={testimonial.avatar}
+                        alt={testimonial.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="text-center md:text-left">
+                      <h4 className="text-white font-semibold text-sm">{testimonial.name}</h4>
+                      <p className="text-purple-400 text-xs">
+                        {testimonial.role}
+                        {testimonial.company && ` • ${testimonial.company}`}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
+          </div>
+        </div>
+
+        {/* Dots Indicator */}
+        <div className="flex justify-center mt-8 space-x-2">
+          {Array.from({ length: Math.ceil(testimonials.length / slidesToShow) }, (_, index) => (
+            <button
+              key={index}
+              onClick={() => goToSlide(index * slidesToShow)}
+              onMouseEnter={() => setIsAutoPlaying(false)}
+              onMouseLeave={() => setIsAutoPlaying(true)}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                Math.floor(currentSlide / slidesToShow) === index 
+                  ? 'bg-purple-500 w-8' 
+                  : 'bg-slate-600 hover:bg-slate-500'
+              }`}
+            />
           ))}
+        </div>
+
+        {/* Testimonial Counter */}
+        <div className="text-center mt-4 text-gray-400 text-sm">
+          Showing {currentSlide + 1}-{Math.min(currentSlide + slidesToShow, testimonials.length)} of {testimonials.length} testimonials
         </div>
       </div>
     </section>
