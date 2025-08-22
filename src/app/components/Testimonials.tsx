@@ -15,7 +15,7 @@ const Testimonials = () => {
     },
     {
       id: 2,
-      name: "Irfan Aulia Azra",
+      name: "Irfan Azra",
       role: "Project Manager",
       company: "Caskargo",
       content: "Ibnu adalah frontend developer yang sangat talented. Dia mampu mengubah desain kompleks menjadi kode yang clean dan responsive. Sangat recommended untuk proyek apa pun!",
@@ -24,11 +24,11 @@ const Testimonials = () => {
     },
     {
       id: 3,
-      name: "Dhafir Asyraf",
-      role: "Owner",
-      company: "ReedDifuser Company",
+      name: "Raihan Rifat",
+      role: "Notaris & PPAT",
+      company: "Raihan Rifat and Partners",
       content: "Kolaborasi dengan Ibnu sangat smooth. Dia memahami kebutuhan user dan mampu menerjemahkan desain menjadi pengalaman yang exceptional. Communication skills-nya juga excellent!",
-      avatar: "/images/testimonials/emily.jpg",
+      avatar: "/images/testimonials/ripat.jpg",
       rating: 4
     }
   ];
