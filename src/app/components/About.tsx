@@ -15,13 +15,12 @@ const About = () => {
             <div className="md:w-1/3">
               <div className="w-64 h-64 mx-auto rounded-full bg-gradient-to-r from-purple-500 to-pink-500 p-1">
                 <div className="w-full h-full rounded-full overflow-hidden">
-                  <Image
+                  <img
                     src="/images/profile8.jpg"
                     alt="Foto Profil"
                     width={1280}
                     height={1280}
                     className="w-full h-full object-cover"
-                    priority
                   />
                 </div>
               </div>
