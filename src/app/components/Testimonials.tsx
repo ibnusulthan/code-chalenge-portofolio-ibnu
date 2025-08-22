@@ -28,7 +28,7 @@ const Testimonials = () => {
       role: "Notaris & PPAT",
       company: "Raihan Rifat and Partners",
       content: "Kolaborasi dengan Ibnu sangat smooth. Dia memahami kebutuhan user dan mampu menerjemahkan desain menjadi pengalaman yang exceptional. Communication skills-nya juga excellent!",
-      avatar: "/images/testimonials/ripat.jpg",
+      avatar: "/images/ripat.jpg",
       rating: 4
     }
   ];
